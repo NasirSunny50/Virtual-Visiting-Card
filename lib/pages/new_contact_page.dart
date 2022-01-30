@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:virtual_visiting_card/model/contact_model.dart';
 
 class NewContactPage extends StatefulWidget {
   static const String routeName = '/new_contact';
@@ -15,6 +16,7 @@ class _NewContactPageState extends State<NewContactPage> {
   final _mobileController = TextEditingController();
   final _addressController = TextEditingController();
   final _websiteController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -41,6 +43,7 @@ class _NewContactPageState extends State<NewContactPage> {
         ],
       ),
       body: Form(
+        key: _formKey,
         child: ListView(
           padding: const EdgeInsets.all(8.0),
           children: [
@@ -148,5 +151,17 @@ class _NewContactPageState extends State<NewContactPage> {
   }
 
   void _saveContact() {
+    if(_formKey.currentState!.validate())
+      {
+        final contact = ContactModel(
+            name: _nameController.text,
+            mobile: _mobileController.text,
+          designation: _designationController.text,
+          email: _emailController.text,
+          companyName: _companyController.text,
+          streetAddress: _addressController.text,
+          website: _websiteController.text,
+        );
+      }
   }
 }
