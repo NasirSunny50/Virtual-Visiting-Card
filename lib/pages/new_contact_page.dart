@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:virtual_visiting_card/db/sqlite_helper.dart';
 import 'package:virtual_visiting_card/model/contact_model.dart';
 
 class NewContactPage extends StatefulWidget {
@@ -162,6 +163,9 @@ class _NewContactPageState extends State<NewContactPage> {
           streetAddress: _addressController.text,
           website: _websiteController.text,
         );
+        print(contact);
+        DBHelper.insertContact(contact)
+            .then((rowId) => Navigator.pop(context));
       }
   }
 }
