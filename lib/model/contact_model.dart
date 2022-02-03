@@ -32,6 +32,18 @@ class ContactModel{
       this.website,
       this.favourite = false});
 
+  factory ContactModel.fromMap(Map<String, dynamic>map) => ContactModel(
+      name: map[tblContactColName],
+      mobile: map[tblContactColMobile],
+      id: map[tblContactColId],
+      designation: map[tblContactColDesignation],
+      email: map[tblContactColEmail],
+      companyName: map[tblContactColCompanyName],
+      website: map[tblContactColWebsite],
+      streetAddress: map[tblContactColAddress],
+      favourite: map[tblContactColFavourite] == 1 ? true : false,
+  );
+
   Map<String, dynamic> toMap(){
     var map = <String, dynamic>{
       tblContactColName: name,
