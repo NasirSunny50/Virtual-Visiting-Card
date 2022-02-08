@@ -32,4 +32,10 @@ class DBHelper{
     final mapList = await db.query(tblContact);
     return List.generate(mapList.length, (index) => ContactModel.fromMap(mapList[index]));
   }
+
+  static Future <ContactModel> getContactById(int id) async{
+    final db = await open();
+    final mapList = await db.query(tblContact, where: '$tblContactColId= ?', whereArgs: [id]);
+    return ContactModel.fromMap(mapList.first);
+  }
 }

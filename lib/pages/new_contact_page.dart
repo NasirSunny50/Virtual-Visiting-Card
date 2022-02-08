@@ -165,7 +165,7 @@ class _NewContactPageState extends State<NewContactPage> {
         );
         print(contact);
         DBHelper.insertContact(contact)
-            .then((rowId) => Navigator.pop(context))
+            .then((rowId) => Navigator.pop(context, contact))
             .onError((error, stackTrace) => throw 'Couldn not Save');
       }
   }

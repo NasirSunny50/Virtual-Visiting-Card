@@ -17,11 +17,18 @@ class _ContactListPageState extends State<ContactListPage> {
 
   @override
   void initState() {
-    DBHelper.getAllContacts().then((cList) {
-      _contactList = cList;
-    });
+    _getData();
     super.initState();
   }
+
+  void _getData(){
+    DBHelper.getAllContacts().then((cList) {
+      setState(() {
+        _contactList = cList;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,9 +44,15 @@ class _ContactListPageState extends State<ContactListPage> {
             return ContactItem(contact);
           }
           ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.pushNamed(context, NewContactPage.routeName);
+        onPressed: () async{
+         final ContactModel? contact = await Navigator.pushNamed(context, NewContactPage.routeName) as ContactModel;
+         if(contact != null){
+           setState(() {
+             _contactList.add(contact);
+           });
+         }
         },
         child: Icon(Icons.add),
         tooltip: 'Add New Contact',
