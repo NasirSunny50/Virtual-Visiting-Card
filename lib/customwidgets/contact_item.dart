@@ -18,7 +18,7 @@ class _ContactItemState extends State<ContactItem> {
     return Card(
       child: ListTile(
         onTap: () {
-          Navigator.pushNamed(context, ContactDetailsPage.routeName, arguments: widget.contactModel.id);
+          Navigator.pushNamed(context, ContactDetailsPage.routeName, arguments: [widget.contactModel.id, widget.contactModel.name]);
         },
         title: Text(widget.contactModel.name),
         trailing: IconButton(
