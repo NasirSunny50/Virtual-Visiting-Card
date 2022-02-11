@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:virtual_visiting_card/db/sqlite_helper.dart';
 import 'package:virtual_visiting_card/model/contact_model.dart';
 
@@ -70,16 +71,12 @@ class _ContactDetailsPageState extends State<ContactDetailsPage> {
                               children: [
                                 IconButton(
                                   icon: Icon(Icons.message_rounded),
-                                  onPressed: (){
-
-                                  },
+                                  onPressed: makeSMS,
                                 ),
 
                                 IconButton(
                                   icon: Icon(Icons.call),
-                                  onPressed: (){
-
-                                  },
+                                  onPressed:_makePhoneCall,
                                 ),
                               ],
                             ),
@@ -89,9 +86,7 @@ class _ContactDetailsPageState extends State<ContactDetailsPage> {
                             title: Text(_contactModel!.streetAddress!),
                             trailing: IconButton(
                               icon: Icon(Icons.map_rounded),
-                              onPressed: (){
-
-                              },
+                              onPressed: makeMap,
                             ),
                           ),
 
@@ -99,9 +94,7 @@ class _ContactDetailsPageState extends State<ContactDetailsPage> {
                             title: Text(_contactModel!.email!),
                             trailing: IconButton(
                               icon: Icon(Icons.email_rounded),
-                              onPressed: (){
-
-                              },
+                              onPressed: makeEmail,
                             ),
                           ),
 
@@ -109,9 +102,7 @@ class _ContactDetailsPageState extends State<ContactDetailsPage> {
                             title: Text(_contactModel!.website!),
                             trailing: IconButton(
                               icon: Icon(Icons.web_rounded),
-                              onPressed: (){
-
-                              },
+                              onPressed: makeWebsite,
                             ),
                           ),
 
@@ -132,4 +123,55 @@ class _ContactDetailsPageState extends State<ContactDetailsPage> {
       )
     );
   }
+
+  void _makePhoneCall() async{
+    final url = 'tel:${_contactModel!.mobile}';
+    if(await canLaunch(url)){
+      await launch(url);
+    }
+    else{
+      throw 'Could not open the app';
+    }
+  }
+  
+  void makeSMS() async{
+    final url = 'sms:${_contactModel!.mobile}';
+    if(await canLaunch(url)){
+      await launch(url);
+    }
+    else{
+      throw 'Could not open the app';
+    }
+  }
+
+  void makeEmail() async{
+    final url = 'mailto:${_contactModel!.email}';
+    if(await canLaunch(url)){
+      await launch(url);
+    }
+    else{
+      throw 'Could not open the app';
+    }
+  }
+
+  void makeWebsite() async{
+    final url = 'http:${_contactModel!.website}';
+    if(await canLaunch(url)){
+      await launch(url);
+    }
+    else{
+      throw 'Could not open the app';
+    }
+  }
+
+  void makeMap() async{
+    final url = 'geo:0,0?q=${_contactModel!.streetAddress}';
+    if(await canLaunch(url)){
+      await launch(url);
+    }
+    else{
+      throw 'Could not open the app';
+    }
+  }
 }
+
