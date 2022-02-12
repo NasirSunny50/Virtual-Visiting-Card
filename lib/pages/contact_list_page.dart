@@ -41,7 +41,7 @@ class _ContactListPageState extends State<ContactListPage> {
         itemCount: _contactList.length,
           itemBuilder: (context, index){
             final contact = _contactList[index];
-            return ContactItem(contact);
+            return ContactItem(contact, _getData);
           }
           ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
